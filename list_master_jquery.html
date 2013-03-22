@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+
+    <title></title>
+    <style>
+        #categories {
+            width: 200px;
+            float: left
+        }
+
+
+    </style>
+</head>
+<body>
+    <ul id="categories">
+
+    </ul>
+
+
+    <script>
+        var ownerID = "e4fd991d-2edd-43ad-9381-2d591eb0b8dc";
+        var appId = "9dbe1bea-20e1-42f7-bbba-4237fd8958c2";
+        var apiUrl = "https://open.jaystack.net/" + ownerID + "/" + appId + "/api/mydatabase";
+
+        var url = apiUrl + "/Categories";
+        $.getJSON(url, function (result) {
+            var data = result.d.results;
+            data.forEach(function (category) {
+                var li = $('<li></li>').text(category.CategoryName);
+                $('#categories').append(li);
+            });
+        });
+
+
+    </script>
+</body>
+</html>

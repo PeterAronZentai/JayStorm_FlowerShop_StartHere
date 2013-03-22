@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://include.jaydata.org/datajs-1.0.3.js"></script>
+    <script src="http://include.jaydata.org/jaydata.js"></script>
+    <title></title>
+</head>
+<body>
+    <ul id="categories">
+
+    </ul>
+
+    <ul id="product">
+
+    </ul>
+
+    <script>
+        var apiKey = {
+            ownerId: 'e4fd991d-2edd-43ad-9381-2d591eb0b8dc',
+            appId: '9dbe1bea-20e1-42f7-bbba-4237fd8958c2',
+            serviceName: 'mydatabase'
+        };
+
+        $data.initService(apiKey).then(function (mydatabase) {
+            mydatabase.Categories.forEach(function (category) {
+                $('#categories').append('<li>' + category.CategoryName + '</li>');
+            });
+        });
+
+    </script>
+</body>
+</html>

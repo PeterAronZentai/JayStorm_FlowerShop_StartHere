@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+
+    <title></title>
+    <style>
+        #categories {
+            width: 200px;
+            float: left
+        }
+
+         #flowers {
+            width: 300px;
+            float: left
+        }
+    </style>
+</head>
+<body>
+    <ul id="categories"></ul>
+
+    <ul id="flowers"></ul>
+
+    <script>
+        var ownerID = "e4fd991d-2edd-43ad-9381-2d591eb0b8dc";
+        var appId = "9dbe1bea-20e1-42f7-bbba-4237fd8958c2";
+        var apiUrl = "https://open.jaystack.net/" + ownerID + "/" + appId + "/api/mydatabase";
+
+        var url = apiUrl + "/Categories";
+        $.getJSON(url, function (result) {
+            var data = result.d.results;
+            data.forEach(function (category) {
+                var li = $('<li></li>');
+                var a = $('<a href=#>').text(category.CategoryName).attr("data-categoryid", category.id);
+                $('#categories').append(li.append(a));
+            });
+        });
+
+        $(document).delegate("[data-categoryid]", "click", function () {
+            var catid = $(this).data("categoryid");
+            url = apiUrl + "/Flowers?$filter=Category_ID eq '" + catid + "'";
+            $.getJSON(url, function (result) {
+                $('#flowers').empty();
+                var data = result.d.results;
+                data.forEach(function (flower) {
+                    var li = $('<li></li>');
+                    var span = $('<div>').text(flower.Name);
+                    var img = $('<img width=200 height=100 />').attr('src', flower.ImageUrl);
+                    li.append(span);
+                    li.append(img);
+                    $('#flowers').append(li);
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://include.jaydata.org/datajs-1.0.3.js"></script>
+    <script src="http://include.jaydata.org/jaydata.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.1/handlebars.js"></script>
+    <script type="text/javascript" src="http://include.jaydata.org/jaydatamodules/handlebars.js"></script>        
+    <title></title>
+    <style>
+        #categories {
+            width: 200px;
+            float: left
+        }
+
+         #flowers {
+            width: 300px;
+            float: left
+        }
+    </style>
+</head>
+<body>
+    <ul id="categories">
+        <h3>Categories</h3>
+
+    </ul>
+
+    <ul id="flowers">
+        <h3>Flowers</h3>
+
+    </ul>
+
+    <script>
+        var apiKey = {
+            ownerId: 'e4fd991d-2edd-43ad-9381-2d591eb0b8dc',
+            appId: '9dbe1bea-20e1-42f7-bbba-4237fd8958c2',
+            serviceName: 'mydatabase'
+        };
+
+        $data.initService(apiKey).then(function (mydatabase) {
+
+            mydatabase.Categories.forEach(function (category) {
+                var li = $('<li></li>');
+                var a = $('<a href=#>').text(category.CategoryName).attr("data-categoryid", category.id);
+                $('#categories').append(li.append(a));
+            });
+
+            $(document).delegate("[data-categoryid]", "click", function () {
+                var queryParams = { catid: $(this).data("categoryid") };
+                mydatabase.Flowers
+                            .filter("it.Category_ID == catid", queryParams)
+                            .toArray(function (flowerArray) {
+
+                            });
+            });
+        });
+
+
+    </script>
+</body>
+</html>
